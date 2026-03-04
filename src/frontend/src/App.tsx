@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import PrivacyPolicy from "./PrivacyPolicy";
+import TermsOfService from "./TermsOfService";
 import { useActor } from "./hooks/useActor";
 
 /* ─── useFadeInOnScroll ──────────────────────────────────────────── */
@@ -1423,6 +1424,9 @@ function LandingPage() {
 export default function App() {
   if (window.location.pathname.startsWith("/privacy")) {
     return <PrivacyPolicy />;
+  }
+  if (window.location.pathname.startsWith("/terms")) {
+    return <TermsOfService />;
   }
   return <LandingPage />;
 }
