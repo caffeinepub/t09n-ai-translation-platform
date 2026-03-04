@@ -251,30 +251,30 @@ function Hero() {
   }, []);
 
   // Animation applies ONLY to t09n.com and The Operating System for Translators
-  // On white background: animate between vivid blue and near-black
-  const heroColor = isBlack ? "#111111" : "#1A6EF8";
+  // On black background: animate between white and vivid blue
+  const heroColor = isBlack ? "#FFFFFF" : "#1A6EF8";
   const heroTextShadow = isBlack
-    ? "0 2px 20px rgba(26,110,248,0.08)"
-    : "0 4px 24px rgba(26,110,248,0.25)";
+    ? "0 2px 20px rgba(255,255,255,0.15)"
+    : "0 4px 24px rgba(26,110,248,0.4)";
   const colorTransition = "color 2.5s ease-in-out";
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden bg-white">
+    <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden bg-black">
       {/* Subtle dot grid overlay for texture */}
       <div
-        className="absolute inset-0 opacity-[0.035]"
+        className="absolute inset-0 opacity-[0.08]"
         style={{
           backgroundImage:
-            "radial-gradient(circle, #1A6EF8 1px, transparent 1px)",
+            "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
           backgroundSize: "32px 32px",
         }}
       />
-      {/* Top radial highlight — very faint blue tint */}
+      {/* Top radial highlight — subtle blue/white tint */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(26,110,248,0.07) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(26,110,248,0.12) 0%, transparent 70%)",
         }}
       />
       {/* Bottom fade into next section */}
@@ -288,7 +288,7 @@ function Hero() {
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center py-20 sm:py-28">
         {/* Hero wordmark */}
         <div className="flex flex-col items-center mb-4">
-          {/* Logo above t09n.com */}
+          {/* Logo above t09n.com — inverted for black background */}
           <img
             src="/assets/uploads/Version-01-3-1.png"
             alt="t09n.com logo"
@@ -296,6 +296,7 @@ function Hero() {
               width: "clamp(80px, 10vw, 120px)",
               height: "auto",
               marginBottom: "16px",
+              filter: "invert(1)",
             }}
           />
           <span
@@ -343,11 +344,11 @@ function Hero() {
           </span>
         </h1>
 
-        {/* Built for Indian Translators pill — on white bg */}
+        {/* Built for Indian Translators pill — on black bg */}
         <div
           style={{
-            background: "rgba(26,110,248,0.07)",
-            border: "1px solid rgba(26,110,248,0.25)",
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.2)",
             borderRadius: "9999px",
             padding: "6px 16px",
             display: "inline-flex",
@@ -368,23 +369,23 @@ function Hero() {
           />
           <span
             className="text-xs font-semibold tracking-wide uppercase"
-            style={{ color: "#1A6EF8" }}
+            style={{ color: "rgba(255,255,255,0.8)" }}
           >
             Built for Indian Translators
           </span>
         </div>
 
-        {/* Subheadline — dark on white bg */}
+        {/* Subheadline — light on black bg */}
         <p
           className="mb-10 max-w-2xl mx-auto"
           style={{
             fontSize: "18px",
             lineHeight: 1.7,
-            color: "#4B5563",
+            color: "rgba(255,255,255,0.7)",
           }}
         >
           Professional translation platform at{" "}
-          <strong style={{ color: "#111111" }}>70% lower cost</strong> than SDL
+          <strong style={{ color: "#FFFFFF" }}>70% lower cost</strong> than SDL
           Trados. Dual-layer technology built for Indian translators.
         </p>
 
@@ -402,7 +403,7 @@ function Hero() {
             type="button"
             data-ocid="hero.pricing_link"
             className="text-sm underline underline-offset-4 transition-colors bg-transparent border-0 p-0 cursor-pointer"
-            style={{ color: "#6B7280" }}
+            style={{ color: "rgba(255,255,255,0.55)" }}
             onClick={() => scrollToSection("#pricing")}
           >
             See Pricing →
@@ -420,7 +421,7 @@ function Hero() {
             <span
               key={badge}
               className="flex items-center gap-1.5"
-              style={{ color: "#6B7280" }}
+              style={{ color: "rgba(255,255,255,0.5)" }}
             >
               <CheckIcon className="w-4 h-4 flex-shrink-0" />
               {badge}
@@ -432,14 +433,14 @@ function Hero() {
       {/* Scroll arrow */}
       <div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
-        style={{ opacity: 0.35 }}
+        style={{ opacity: 0.45 }}
       >
         <svg
           width="20"
           height="20"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="#1A6EF8"
+          stroke="rgba(255,255,255,0.7)"
           aria-hidden="true"
         >
           <path
