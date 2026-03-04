@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import AcceptableUsePolicy from "./AcceptableUsePolicy";
 import PrivacyPolicy from "./PrivacyPolicy";
 import TermsOfService from "./TermsOfService";
 import { useActor } from "./hooks/useActor";
@@ -1313,8 +1314,9 @@ function Footer() {
     {
       heading: "Legal",
       links: [
-        { label: "Privacy Policy", href: "/privacy" },
-        { label: "Terms of Service", href: "/terms" },
+        { label: "Privacy Policy", href: "/privacy-policy" },
+        { label: "Terms of Service", href: "/terms-of-service" },
+        { label: "Acceptable Use", href: "/acceptable-use-policy" },
       ],
     },
     {
@@ -1381,17 +1383,6 @@ function Footer() {
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-4 text-xs text-white/40">
             <p>© {year} t09n.com. All rights reserved.</p>
-            <p>
-              Built with ♥ using{" "}
-              <a
-                href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
-                className="hover:text-white/70 transition-colors underline underline-offset-2"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                caffeine.ai
-              </a>
-            </p>
           </div>
         </div>
       </div>
@@ -1422,11 +1413,20 @@ function LandingPage() {
 
 /* ─── App ────────────────────────────────────────────────────────── */
 export default function App() {
-  if (window.location.pathname.startsWith("/privacy")) {
+  if (
+    window.location.pathname.startsWith("/privacy-policy") ||
+    window.location.pathname.startsWith("/privacy")
+  ) {
     return <PrivacyPolicy />;
   }
-  if (window.location.pathname.startsWith("/terms")) {
+  if (
+    window.location.pathname.startsWith("/terms-of-service") ||
+    window.location.pathname.startsWith("/terms")
+  ) {
     return <TermsOfService />;
+  }
+  if (window.location.pathname.startsWith("/acceptable-use-policy")) {
+    return <AcceptableUsePolicy />;
   }
   return <LandingPage />;
 }
