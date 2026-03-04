@@ -48,27 +48,27 @@
     --popover: 1 0 0;
     --popover-foreground: 0.13 0 0;
 
-    /* Primary: Purple-Blue #667eea → OKLCH ~0.58 0.18 270 */
-    --primary: 0.58 0.18 270;
+    /* Primary: Vivid Blue #1A6EF8 → OKLCH ~0.52 0.24 255 */
+    --primary: 0.52 0.24 255;
     --primary-foreground: 1 0 0;
 
-    --secondary: 0.97 0.01 270;
-    --secondary-foreground: 0.58 0.18 270;
+    --secondary: 0.97 0.01 255;
+    --secondary-foreground: 0.52 0.24 255;
 
-    --muted: 0.97 0.005 270;
+    --muted: 0.97 0.005 255;
     --muted-foreground: 0.48 0.01 0;
 
-    --accent: 0.96 0.01 270;
-    --accent-foreground: 0.58 0.18 270;
+    --accent: 0.96 0.01 255;
+    --accent-foreground: 0.52 0.24 255;
 
     --destructive: 0.577 0.245 27.325;
     --destructive-foreground: 0.985 0 0;
 
-    --border: 0.92 0.003 270;
-    --input: 0.92 0.003 270;
-    --ring: 0.58 0.18 270;
+    --border: 0.92 0.003 255;
+    --input: 0.92 0.003 255;
+    --ring: 0.52 0.24 255;
 
-    --chart-1: 0.58 0.18 270;
+    --chart-1: 0.52 0.24 255;
     --chart-2: 0.6 0.118 184.704;
     --chart-3: 0.398 0.07 227.392;
     --chart-4: 0.828 0.189 84.429;
@@ -76,47 +76,47 @@
 
     --sidebar: 0.985 0 0;
     --sidebar-foreground: 0.13 0 0;
-    --sidebar-primary: 0.58 0.18 270;
+    --sidebar-primary: 0.52 0.24 255;
     --sidebar-primary-foreground: 1 0 0;
-    --sidebar-accent: 0.96 0.01 270;
-    --sidebar-accent-foreground: 0.58 0.18 270;
-    --sidebar-border: 0.92 0.003 270;
-    --sidebar-ring: 0.58 0.18 270;
+    --sidebar-accent: 0.96 0.01 255;
+    --sidebar-accent-foreground: 0.52 0.24 255;
+    --sidebar-border: 0.92 0.003 255;
+    --sidebar-ring: 0.52 0.24 255;
   }
 
   .dark {
-    --background: 0.09 0.01 270;
+    --background: 0.09 0.01 255;
     --foreground: 0.97 0 0;
-    --card: 0.13 0.015 270;
+    --card: 0.13 0.015 255;
     --card-foreground: 0.97 0 0;
-    --popover: 0.16 0.015 270;
+    --popover: 0.16 0.015 255;
     --popover-foreground: 0.97 0 0;
-    --primary: 0.65 0.18 270;
+    --primary: 0.58 0.24 255;
     --primary-foreground: 1 0 0;
-    --secondary: 0.2 0.02 270;
+    --secondary: 0.2 0.02 255;
     --secondary-foreground: 0.97 0 0;
-    --muted: 0.2 0.01 270;
+    --muted: 0.2 0.01 255;
     --muted-foreground: 0.65 0 0;
-    --accent: 0.2 0.02 270;
+    --accent: 0.2 0.02 255;
     --accent-foreground: 0.97 0 0;
     --destructive: 0.704 0.191 22.216;
     --destructive-foreground: 0.97 0 0;
     --border: 1 0 0 / 10%;
     --input: 1 0 0 / 15%;
-    --ring: 0.58 0.18 270;
-    --chart-1: 0.65 0.18 270;
+    --ring: 0.52 0.24 255;
+    --chart-1: 0.58 0.24 255;
     --chart-2: 0.696 0.17 162.48;
     --chart-3: 0.769 0.188 70.08;
     --chart-4: 0.627 0.265 303.9;
     --chart-5: 0.645 0.246 16.439;
-    --sidebar: 0.13 0.015 270;
+    --sidebar: 0.13 0.015 255;
     --sidebar-foreground: 0.97 0 0;
-    --sidebar-primary: 0.65 0.18 270;
+    --sidebar-primary: 0.58 0.24 255;
     --sidebar-primary-foreground: 1 0 0;
-    --sidebar-accent: 0.2 0.02 270;
+    --sidebar-accent: 0.2 0.02 255;
     --sidebar-accent-foreground: 0.97 0 0;
     --sidebar-border: 1 0 0 / 10%;
-    --sidebar-ring: 0.58 0.18 270;
+    --sidebar-ring: 0.52 0.24 255;
   }
 
   * {
@@ -168,14 +168,14 @@
 .fade-in-delay-4 { transition-delay: 0.4s; }
 .fade-in-delay-5 { transition-delay: 0.5s; }
 
-/* ── Button Primary (purple-blue bg, white text) ───────────────── */
+/* ── Button Primary (vivid blue bg, white text) ────────────────── */
 .btn-primary {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px oklch(0.58 0.18 270 / 0.35);
+  box-shadow: 0 8px 24px oklch(0.52 0.24 255 / 0.35);
 }
 
 /* ── Button Primary White (white bg, red text) — for red section CTAs */
@@ -200,21 +200,21 @@
 
 /* ── Pricing Highlighted Card ──────────────────────────────────── */
 .pricing-highlight {
-  border: 2px solid oklch(0.58 0.18 270);
+  border: 2px solid oklch(0.52 0.24 255);
   box-shadow:
-    0 0 0 4px oklch(0.58 0.18 270 / 0.08),
-    0 20px 48px oklch(0.58 0.18 270 / 0.15);
+    0 0 0 4px oklch(0.52 0.24 255 / 0.08),
+    0 20px 48px oklch(0.52 0.24 255 / 0.15);
 }
 
 /* ── Selection ─────────────────────────────────────────────────── */
 ::selection {
-  background: oklch(0.58 0.18 270 / 0.15);
+  background: oklch(0.52 0.24 255 / 0.15);
   color: oklch(0.13 0 0);
 }
 
 /* ── Focus Visible ─────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid oklch(0.58 0.18 270);
+  outline: 2px solid oklch(0.52 0.24 255);
   outline-offset: 2px;
 }
 

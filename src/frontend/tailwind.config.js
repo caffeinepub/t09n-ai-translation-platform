@@ -22,11 +22,11 @@ export default {
       },
       colors: {
         brand: {
-          purple: "oklch(0.58 0.18 270)",
-          "purple-light": "oklch(0.94 0.04 270)",
-          "purple-dark": "oklch(0.46 0.18 270)",
+          blue: "oklch(0.52 0.24 255)",
+          "blue-light": "oklch(0.94 0.06 255)",
+          "blue-dark": "oklch(0.42 0.24 255)",
           dark: "oklch(0.13 0 0)",
-          light: "oklch(0.97 0.005 270)",
+          light: "oklch(0.97 0.005 255)",
         },
         border: "oklch(var(--border))",
         input: "oklch(var(--input))",

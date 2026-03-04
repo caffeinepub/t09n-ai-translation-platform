@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import PrivacyPolicy from "./PrivacyPolicy";
 import { useActor } from "./hooks/useActor";
 
 /* ─── useFadeInOnScroll ──────────────────────────────────────────── */
@@ -127,18 +128,16 @@ function Navbar() {
     scrollToSection(href);
   };
 
-  /* On hero (not scrolled): white text on red bg.
-     On scroll: white bg, dark text, red CTA. */
-  const navTextClass = scrolled
-    ? "text-[#374151] hover:text-[#111111]"
-    : "text-white/85 hover:text-white";
+  /* Hero is white bg, so nav text is always dark.
+     On scroll: frosted glass effect kicks in. */
+  const navTextClass = "text-[#374151] hover:text-[#111111]";
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-white/96 backdrop-blur-md shadow-sm border-b border-[#E5E7EB]"
-          : "bg-transparent"
+          : "bg-white/80 backdrop-blur-sm border-b border-[#E5E7EB]/60"
       }`}
     >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
@@ -152,7 +151,6 @@ function Navbar() {
             src="/assets/uploads/Version-01-2-1.png"
             alt="t09n.com logo"
             className="h-10 w-auto transition-all duration-300"
-            style={scrolled ? {} : { filter: "invert(1) brightness(10)" }}
           />
         </button>
 
@@ -174,11 +172,7 @@ function Navbar() {
           ))}
           <Button
             size="sm"
-            className={`font-semibold btn-primary px-5 transition-all ${
-              scrolled
-                ? "bg-primary hover:bg-primary/90 text-white"
-                : "bg-white text-primary hover:bg-white/90"
-            }`}
+            className="font-semibold btn-primary px-5 bg-[#1A6EF8] hover:bg-[#1560d4] text-white border border-[#1A6EF8]"
             data-ocid="nav.cta_button"
             onClick={() => scrollToSection("#waitlist")}
           >
@@ -197,19 +191,13 @@ function Navbar() {
         >
           <div className="w-5 flex flex-col gap-1.5">
             <span
-              className={`block h-0.5 transition-all duration-300 ${
-                scrolled ? "bg-foreground" : "bg-white"
-              } ${mobileOpen ? "rotate-45 translate-y-2" : ""}`}
+              className={`block h-0.5 bg-foreground transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`}
             />
             <span
-              className={`block h-0.5 transition-all duration-300 ${
-                scrolled ? "bg-foreground" : "bg-white"
-              } ${mobileOpen ? "opacity-0" : ""}`}
+              className={`block h-0.5 bg-foreground transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`}
             />
             <span
-              className={`block h-0.5 transition-all duration-300 ${
-                scrolled ? "bg-foreground" : "bg-white"
-              } ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`}
+              className={`block h-0.5 bg-foreground transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`}
             />
           </div>
         </button>
@@ -261,43 +249,37 @@ function Hero() {
   }, []);
 
   // Animation applies ONLY to t09n.com and The Operating System for Translators
-  const heroColor = isBlack ? "#111111" : "#ffffff";
+  // On white background: animate between vivid blue and near-black
+  const heroColor = isBlack ? "#111111" : "#1A6EF8";
   const heroTextShadow = isBlack
-    ? "0 2px 20px rgba(255,255,255,0.1)"
-    : "0 2px 20px rgba(0,0,0,0.15)";
+    ? "0 2px 20px rgba(26,110,248,0.08)"
+    : "0 4px 24px rgba(26,110,248,0.25)";
   const colorTransition = "color 2.5s ease-in-out";
 
   return (
-    <section
-      className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(135deg, #667eea 0%, #4f5fc0 60%, #3a3fa0 100%)",
-      }}
-    >
-      {/* Subtle noise/grid overlay for texture */}
+    <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden bg-white">
+      {/* Subtle dot grid overlay for texture */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.035]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
+            "radial-gradient(circle, #1A6EF8 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
         }}
       />
-      {/* Top radial highlight */}
+      {/* Top radial highlight — very faint blue tint */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 55% at 50% -5%, rgba(180,160,255,0.25) 0%, transparent 65%)",
+            "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(26,110,248,0.07) 0%, transparent 70%)",
         }}
       />
-      {/* Bottom wave fade into white sections */}
+      {/* Bottom fade into next section */}
       <div
-        className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
+        className="absolute inset-x-0 bottom-0 h-24 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(to bottom, transparent, rgba(102,126,234,0.1) 60%, #f7f5ff 100%)",
+          background: "linear-gradient(to bottom, transparent, #F7F9FC 100%)",
         }}
       />
 
@@ -340,7 +322,7 @@ function Hero() {
           <br className="hidden lg:block" />
           <span
             style={{
-              color: isBlack ? "rgba(17,17,17,0.85)" : "rgba(255,255,255,0.90)",
+              color: isBlack ? "rgba(17,17,17,0.85)" : "rgba(26,110,248,0.85)",
               transition: colorTransition,
             }}
           >
@@ -349,11 +331,11 @@ function Hero() {
           </span>
         </h1>
 
-        {/* Built for Indian Translators pill — static white */}
+        {/* Built for Indian Translators pill — on white bg */}
         <div
           style={{
-            background: "rgba(255,255,255,0.15)",
-            border: "1px solid rgba(255,255,255,0.30)",
+            background: "rgba(26,110,248,0.07)",
+            border: "1px solid rgba(26,110,248,0.25)",
             borderRadius: "9999px",
             padding: "6px 16px",
             display: "inline-flex",
@@ -367,38 +349,38 @@ function Hero() {
               width: "6px",
               height: "6px",
               borderRadius: "50%",
-              background: "#ffffff",
+              background: "#1A6EF8",
               display: "inline-block",
               flexShrink: 0,
             }}
           />
           <span
             className="text-xs font-semibold tracking-wide uppercase"
-            style={{ color: "#ffffff" }}
+            style={{ color: "#1A6EF8" }}
           >
             Built for Indian Translators
           </span>
         </div>
 
-        {/* Subheadline — static white */}
+        {/* Subheadline — dark on white bg */}
         <p
           className="mb-10 max-w-2xl mx-auto"
           style={{
             fontSize: "18px",
             lineHeight: 1.7,
-            color: "rgba(255,255,255,0.80)",
+            color: "#4B5563",
           }}
         >
           Professional translation platform at{" "}
-          <strong style={{ color: "#ffffff" }}>70% lower cost</strong> than SDL
+          <strong style={{ color: "#111111" }}>70% lower cost</strong> than SDL
           Trados. Dual-layer technology built for Indian translators.
         </p>
 
-        {/* Primary CTA + secondary ghost link — buttons stay as-is */}
+        {/* Primary CTA + secondary ghost link */}
         <div className="flex flex-col items-center gap-4 mb-12">
           <Button
             size="lg"
-            className="bg-white text-primary hover:bg-white/92 font-bold text-base px-9 h-14 btn-primary-white w-full sm:w-auto shadow-xl"
+            className="bg-[#1A6EF8] text-white hover:bg-[#1560d4] font-bold text-base px-9 h-14 btn-primary w-full sm:w-auto shadow-lg border-2 border-[#1A6EF8]"
             data-ocid="hero.cta_button"
             onClick={() => scrollToSection("#waitlist")}
           >
@@ -408,7 +390,7 @@ function Hero() {
             type="button"
             data-ocid="hero.pricing_link"
             className="text-sm underline underline-offset-4 transition-colors bg-transparent border-0 p-0 cursor-pointer"
-            style={{ color: "rgba(255,255,255,0.70)" }}
+            style={{ color: "#6B7280" }}
             onClick={() => scrollToSection("#pricing")}
           >
             See Pricing →
@@ -426,7 +408,7 @@ function Hero() {
             <span
               key={badge}
               className="flex items-center gap-1.5"
-              style={{ color: "rgba(255,255,255,0.80)" }}
+              style={{ color: "#6B7280" }}
             >
               <CheckIcon className="w-4 h-4 flex-shrink-0" />
               {badge}
@@ -438,14 +420,14 @@ function Hero() {
       {/* Scroll arrow */}
       <div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
-        style={{ opacity: 0.4 }}
+        style={{ opacity: 0.35 }}
       >
         <svg
           width="20"
           height="20"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="white"
+          stroke="#1A6EF8"
           aria-hidden="true"
         >
           <path
@@ -1163,16 +1145,16 @@ function WaitlistSection() {
       className="py-section relative overflow-hidden"
       style={{
         background:
-          "linear-gradient(135deg, #667eea 0%, #4f5fc0 60%, #3a3fa0 100%)",
+          "linear-gradient(135deg, #1A6EF8 0%, #1255cc 60%, #0d44a8 100%)",
       }}
     >
-      {/* Subtle grid overlay */}
+      {/* Subtle dot grid overlay */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
+            "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
         }}
       />
       {/* Top radial highlight */}
@@ -1180,7 +1162,7 @@ function WaitlistSection() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(180,160,255,0.2) 0%, transparent 65%)",
+            "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(255,255,255,0.12) 0%, transparent 65%)",
         }}
       />
 
@@ -1416,10 +1398,9 @@ function Footer() {
   );
 }
 
-/* ─── App ────────────────────────────────────────────────────────── */
-export default function App() {
+/* ─── LandingPage ────────────────────────────────────────────────── */
+function LandingPage() {
   useFadeInOnScroll();
-
   return (
     <div className="font-body antialiased">
       <Navbar />
@@ -1436,4 +1417,12 @@ export default function App() {
       <Footer />
     </div>
   );
+}
+
+/* ─── App ────────────────────────────────────────────────────────── */
+export default function App() {
+  if (window.location.pathname.startsWith("/privacy")) {
+    return <PrivacyPolicy />;
+  }
+  return <LandingPage />;
 }
