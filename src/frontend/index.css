@@ -4,6 +4,14 @@
 
 /* ── Font Faces ────────────────────────────────────────────────── */
 @font-face {
+  font-family: "All Round Gothic";
+  src: url("/assets/Fontspring-DEMO-allroundgothic-boldoblique.otf") format("opentype");
+  font-weight: 700;
+  font-style: oblique;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Cabinet Grotesk";
   src: url("/assets/fonts/CabinetGrotesk-Variable.woff2") format("woff2");
   font-weight: 100 900;

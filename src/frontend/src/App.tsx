@@ -260,11 +260,8 @@ function Hero() {
     return () => clearInterval(interval);
   }, []);
 
+  // Animation applies ONLY to t09n.com and The Operating System for Translators
   const heroColor = isBlack ? "#111111" : "#ffffff";
-  const heroColorMuted = isBlack
-    ? "rgba(17,17,17,0.75)"
-    : "rgba(255,255,255,0.80)";
-  const heroColorStrong = isBlack ? "#111111" : "#ffffff";
   const heroTextShadow = isBlack
     ? "0 2px 20px rgba(255,255,255,0.1)"
     : "0 2px 20px rgba(0,0,0,0.15)";
@@ -308,10 +305,12 @@ function Hero() {
         {/* Hero wordmark */}
         <div className="flex flex-col items-center mb-4">
           <span
-            className="font-display font-extrabold"
             style={{
+              fontFamily: '"All Round Gothic", sans-serif',
+              fontWeight: 700,
+              fontStyle: "oblique",
               fontSize: "clamp(28px, 4vw, 48px)",
-              letterSpacing: "-0.02em",
+              letterSpacing: "0.01em",
               lineHeight: 1,
               textShadow: heroTextShadow,
               color: heroColor,
@@ -324,14 +323,17 @@ function Hero() {
 
         {/* Headline */}
         <h1
-          className="font-display font-extrabold leading-tight tracking-tight mb-6"
           style={{
+            fontFamily: '"All Round Gothic", sans-serif',
+            fontWeight: 700,
+            fontStyle: "oblique",
             fontSize: "clamp(36px, 5.5vw, 56px)",
-            letterSpacing: "-0.02em",
+            letterSpacing: "0.01em",
             lineHeight: 1.1,
             textShadow: heroTextShadow,
             color: heroColor,
             transition: `${colorTransition}, text-shadow 2.5s ease-in-out`,
+            marginBottom: "1.5rem",
           }}
         >
           The Operating System
@@ -347,15 +349,11 @@ function Hero() {
           </span>
         </h1>
 
-        {/* Built for Indian Translators pill — below headline */}
+        {/* Built for Indian Translators pill — static white */}
         <div
           style={{
-            background: isBlack ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.15)",
-            border: isBlack
-              ? "1px solid rgba(0,0,0,0.20)"
-              : "1px solid rgba(255,255,255,0.30)",
-            transition:
-              "background 2.5s ease-in-out, border-color 2.5s ease-in-out",
+            background: "rgba(255,255,255,0.15)",
+            border: "1px solid rgba(255,255,255,0.30)",
             borderRadius: "9999px",
             padding: "6px 16px",
             display: "inline-flex",
@@ -369,37 +367,31 @@ function Hero() {
               width: "6px",
               height: "6px",
               borderRadius: "50%",
-              background: heroColor,
-              transition: "background 2.5s ease-in-out",
+              background: "#ffffff",
               display: "inline-block",
               flexShrink: 0,
             }}
           />
           <span
             className="text-xs font-semibold tracking-wide uppercase"
-            style={{ color: heroColor, transition: colorTransition }}
+            style={{ color: "#ffffff" }}
           >
             Built for Indian Translators
           </span>
         </div>
 
-        {/* Subheadline */}
+        {/* Subheadline — static white */}
         <p
           className="mb-10 max-w-2xl mx-auto"
           style={{
             fontSize: "18px",
             lineHeight: 1.7,
-            color: heroColorMuted,
-            transition: colorTransition,
+            color: "rgba(255,255,255,0.80)",
           }}
         >
           Professional translation platform at{" "}
-          <strong
-            style={{ color: heroColorStrong, transition: colorTransition }}
-          >
-            70% lower cost
-          </strong>{" "}
-          than SDL Trados. Dual-layer technology built for Indian translators.
+          <strong style={{ color: "#ffffff" }}>70% lower cost</strong> than SDL
+          Trados. Dual-layer technology built for Indian translators.
         </p>
 
         {/* Primary CTA + secondary ghost link — buttons stay as-is */}
@@ -416,10 +408,7 @@ function Hero() {
             type="button"
             data-ocid="hero.pricing_link"
             className="text-sm underline underline-offset-4 transition-colors bg-transparent border-0 p-0 cursor-pointer"
-            style={{
-              color: isBlack ? "rgba(17,17,17,0.65)" : "rgba(255,255,255,0.70)",
-              transition: colorTransition,
-            }}
+            style={{ color: "rgba(255,255,255,0.70)" }}
             onClick={() => scrollToSection("#pricing")}
           >
             See Pricing →
@@ -437,7 +426,7 @@ function Hero() {
             <span
               key={badge}
               className="flex items-center gap-1.5"
-              style={{ color: heroColorMuted, transition: colorTransition }}
+              style={{ color: "rgba(255,255,255,0.80)" }}
             >
               <CheckIcon className="w-4 h-4 flex-shrink-0" />
               {badge}
@@ -449,19 +438,15 @@ function Hero() {
       {/* Scroll arrow */}
       <div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
-        style={{
-          opacity: isBlack ? 0.5 : 0.4,
-          transition: "opacity 2.5s ease-in-out",
-        }}
+        style={{ opacity: 0.4 }}
       >
         <svg
           width="20"
           height="20"
           fill="none"
           viewBox="0 0 24 24"
-          stroke={isBlack ? "#111111" : "white"}
+          stroke="white"
           aria-hidden="true"
-          style={{ transition: "stroke 2.5s ease-in-out" }}
         >
           <path
             strokeLinecap="round"
