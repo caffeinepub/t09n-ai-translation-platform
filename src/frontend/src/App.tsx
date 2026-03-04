@@ -127,11 +127,17 @@ function Navbar() {
     scrollToSection(href);
   };
 
+  /* On hero (not scrolled): white text on red bg.
+     On scroll: white bg, dark text, red CTA. */
+  const navTextClass = scrolled
+    ? "text-[#374151] hover:text-[#111111]"
+    : "text-white/85 hover:text-white";
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-[#E5E7EB]"
+          ? "bg-white/96 backdrop-blur-md shadow-sm border-b border-[#E5E7EB]"
           : "bg-transparent"
       }`}
     >
@@ -145,7 +151,8 @@ function Navbar() {
           <img
             src="/assets/uploads/Version-01-2-1.png"
             alt="t09n.com logo"
-            className="h-14 w-auto"
+            className="h-10 w-auto transition-all duration-300"
+            style={scrolled ? {} : { filter: "invert(1) brightness(10)" }}
           />
         </button>
 
@@ -156,7 +163,7 @@ function Navbar() {
               key={link.href}
               href={link.href}
               data-ocid={link.ocid}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className={`text-sm font-medium transition-colors ${navTextClass}`}
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClick(link.href);
@@ -167,7 +174,11 @@ function Navbar() {
           ))}
           <Button
             size="sm"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold btn-primary px-5"
+            className={`font-semibold btn-primary px-5 transition-all ${
+              scrolled
+                ? "bg-primary hover:bg-primary/90 text-white"
+                : "bg-white text-primary hover:bg-white/90"
+            }`}
             data-ocid="nav.cta_button"
             onClick={() => scrollToSection("#waitlist")}
           >
@@ -178,7 +189,7 @@ function Navbar() {
         {/* Mobile hamburger */}
         <button
           type="button"
-          className="md:hidden p-2 rounded-md hover:bg-muted transition-colors"
+          className="md:hidden p-2 rounded-md transition-colors"
           data-ocid="nav.mobile_menu_toggle"
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle navigation menu"
@@ -186,19 +197,19 @@ function Navbar() {
         >
           <div className="w-5 flex flex-col gap-1.5">
             <span
-              className={`block h-0.5 bg-foreground transition-all duration-300 ${
-                mobileOpen ? "rotate-45 translate-y-2" : ""
-              }`}
+              className={`block h-0.5 transition-all duration-300 ${
+                scrolled ? "bg-foreground" : "bg-white"
+              } ${mobileOpen ? "rotate-45 translate-y-2" : ""}`}
             />
             <span
-              className={`block h-0.5 bg-foreground transition-all duration-300 ${
-                mobileOpen ? "opacity-0" : ""
-              }`}
+              className={`block h-0.5 transition-all duration-300 ${
+                scrolled ? "bg-foreground" : "bg-white"
+              } ${mobileOpen ? "opacity-0" : ""}`}
             />
             <span
-              className={`block h-0.5 bg-foreground transition-all duration-300 ${
-                mobileOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
+              className={`block h-0.5 transition-all duration-300 ${
+                scrolled ? "bg-foreground" : "bg-white"
+              } ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`}
             />
           </div>
         </button>
@@ -206,13 +217,13 @@ function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-white/98 backdrop-blur-md border-b border-[#E5E7EB] px-4 py-5 flex flex-col gap-4">
+        <div className="md:hidden bg-white border-b border-[#E5E7EB] px-4 py-5 flex flex-col gap-4">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               data-ocid={link.ocid}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground py-1 transition-colors"
+              className="text-sm font-medium text-[#374151] hover:text-[#111111] py-1 transition-colors"
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClick(link.href);
@@ -223,7 +234,7 @@ function Navbar() {
           ))}
           <Button
             size="sm"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold w-fit btn-primary"
+            className="bg-primary hover:bg-primary/90 text-white font-semibold w-fit btn-primary"
             data-ocid="nav.cta_button"
             onClick={() => {
               setMobileOpen(false);
@@ -241,69 +252,83 @@ function Navbar() {
 /* ─── Hero ───────────────────────────────────────────────────────── */
 function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden bg-white">
-      {/* Subtle grid background */}
+    <section
+      className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, #667eea 0%, #4f5fc0 60%, #3a3fa0 100%)",
+      }}
+    >
+      {/* Subtle noise/grid overlay for texture */}
       <div
-        className="absolute inset-0 opacity-[0.035]"
+        className="absolute inset-0 opacity-[0.04]"
         style={{
           backgroundImage:
-            "linear-gradient(#111 1px, transparent 1px), linear-gradient(90deg, #111 1px, transparent 1px)",
+            "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
           backgroundSize: "40px 40px",
         }}
       />
-      {/* Radial glow */}
+      {/* Top radial highlight */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 0%, oklch(0.54 0.18 264 / 0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 55% at 50% -5%, rgba(180,160,255,0.25) 0%, transparent 65%)",
         }}
       />
-      {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+      {/* Bottom wave fade into white sections */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent, rgba(102,126,234,0.1) 60%, #f7f5ff 100%)",
+        }}
+      />
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center py-20 sm:py-28">
-        {/* Hero logo — enlarged for visual impact */}
-        <div className="flex justify-center mb-10">
+        {/* Hero logo — white version on purple bg */}
+        <div className="flex flex-col items-center mb-10">
           <img
-            src="/assets/uploads/Version-01-2-1.png"
+            src="/assets/uploads/Version-06-1.png"
             alt="t09n.com"
-            className="h-40 sm:h-52 w-auto"
-            style={{ imageRendering: "auto" }}
+            className="h-28 sm:h-36 w-auto"
+            style={{
+              imageRendering: "auto",
+              filter: "invert(1) brightness(10)",
+            }}
           />
         </div>
 
         {/* Eyebrow pill */}
-        <div className="inline-flex items-center gap-2 bg-primary/8 border border-primary/20 rounded-full px-4 py-1.5 mb-8">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
-          <span className="text-xs font-semibold text-primary tracking-wide uppercase">
+        <div className="inline-flex items-center gap-2 bg-white/15 border border-white/30 rounded-full px-4 py-1.5 mb-8">
+          <span className="w-1.5 h-1.5 rounded-full bg-white inline-block" />
+          <span className="text-xs font-semibold text-white tracking-wide uppercase">
             Built for Indian Translators
           </span>
         </div>
 
-        {/* Headline — responsive line break */}
+        {/* Headline */}
         <h1
-          className="font-display font-extrabold text-foreground leading-tight tracking-tight mb-6"
+          className="font-display font-extrabold text-white leading-tight tracking-tight mb-6"
           style={{
             fontSize: "clamp(36px, 5.5vw, 56px)",
             letterSpacing: "-0.02em",
             lineHeight: 1.1,
+            textShadow: "0 2px 20px rgba(0,0,0,0.15)",
           }}
         >
           The Operating System
           <br className="hidden lg:block" />
-          <span className="text-primary"> for Translators</span>
+          <span className="text-white/90"> for Translators</span>
         </h1>
 
         {/* Subheadline */}
         <p
-          className="text-muted-foreground mb-10 max-w-2xl mx-auto"
+          className="text-white/80 mb-10 max-w-2xl mx-auto"
           style={{ fontSize: "18px", lineHeight: 1.7 }}
         >
           Professional translation platform at{" "}
-          <strong className="text-foreground font-semibold">
-            70% lower cost
-          </strong>{" "}
+          <strong className="text-white font-semibold">70% lower cost</strong>{" "}
           than SDL Trados. Dual-layer technology built for Indian translators.
         </p>
 
@@ -311,7 +336,7 @@ function Hero() {
         <div className="flex flex-col items-center gap-4 mb-12">
           <Button
             size="lg"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base px-9 h-14 btn-primary w-full sm:w-auto hero-cta-glow"
+            className="bg-white text-primary hover:bg-white/92 font-bold text-base px-9 h-14 btn-primary-white w-full sm:w-auto shadow-xl"
             data-ocid="hero.cta_button"
             onClick={() => scrollToSection("#waitlist")}
           >
@@ -320,15 +345,15 @@ function Hero() {
           <button
             type="button"
             data-ocid="hero.pricing_link"
-            className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors bg-transparent border-0 p-0 cursor-pointer"
+            className="text-sm text-white/70 hover:text-white underline underline-offset-4 transition-colors bg-transparent border-0 p-0 cursor-pointer"
             onClick={() => scrollToSection("#pricing")}
           >
             See Pricing →
           </button>
         </div>
 
-        {/* Trust badges — 4 items */}
-        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
+        {/* Trust badges */}
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-white/75">
           {[
             "1,000 words free",
             "10+ Indian languages",
@@ -336,7 +361,7 @@ function Hero() {
             "No credit card",
           ].map((badge) => (
             <span key={badge} className="flex items-center gap-1.5">
-              <CheckIcon className="w-4 h-4 text-primary flex-shrink-0" />
+              <CheckIcon className="w-4 h-4 text-white/90 flex-shrink-0" />
               {badge}
             </span>
           ))}
@@ -344,13 +369,13 @@ function Hero() {
       </div>
 
       {/* Scroll arrow */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-30">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
         <svg
           width="20"
           height="20"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="currentColor"
+          stroke="white"
           aria-hidden="true"
         >
           <path
@@ -402,20 +427,20 @@ function ProblemSolution() {
         <div className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Old Way */}
-            <div className="fade-in fade-in-delay-1 bg-white rounded-2xl p-8 border border-[#E5E7EB] border-l-4 border-l-red-400">
+            <div className="fade-in fade-in-delay-1 bg-white rounded-2xl p-8 border border-[#E5E7EB] border-l-4 border-l-orange-400">
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-2xl">😤</span>
                 <h3 className="font-display font-bold text-lg text-foreground">
                   The Old Way
                 </h3>
-                <span className="text-xs font-semibold uppercase tracking-wide bg-red-50 text-red-500 px-2.5 py-1 rounded-full ml-auto">
+                <span className="text-xs font-semibold uppercase tracking-wide bg-orange-50 text-orange-600 px-2.5 py-1 rounded-full ml-auto">
                   SDL Trados
                 </span>
               </div>
               <ul className="space-y-3.5">
                 {oldWayPains.map((pain) => (
                   <li key={pain} className="flex items-start gap-3">
-                    <XIcon className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+                    <XIcon className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
                     <span className="text-sm text-muted-foreground">
                       {pain}
                     </span>
@@ -602,7 +627,7 @@ function HowItWorks() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
           {/* Connecting line (desktop) */}
           <div
-            className="hidden md:block absolute top-10 h-px bg-[#E5E7EB]"
+            className="hidden md:block absolute top-10 h-px bg-primary/20"
             style={{
               left: "calc(16.67% + 2rem)",
               right: "calc(16.67% + 2rem)",
@@ -614,7 +639,7 @@ function HowItWorks() {
               key={step.number}
               className={`fade-in ${STEP_DELAYS[i]} text-center relative`}
             >
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white border-2 border-[#E5E7EB] mb-6 relative">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-primary/8 border-2 border-primary/25 mb-6 relative">
                 <span
                   className="font-display font-extrabold text-primary"
                   style={{ fontSize: "24px" }}
@@ -754,7 +779,7 @@ function Pricing() {
                 style={{ width: "200px", minWidth: "200px" }}
               >
                 {plan.highlighted && (
-                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] font-bold tracking-widest uppercase px-4 py-1 rounded-full whitespace-nowrap">
+                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold tracking-widest uppercase px-4 py-1 rounded-full whitespace-nowrap">
                     ⭐ Most Popular
                   </span>
                 )}
@@ -797,7 +822,7 @@ function Pricing() {
                   <Button
                     className={`w-full font-semibold btn-primary text-sm ${
                       plan.highlighted
-                        ? "bg-primary hover:bg-primary/90 text-primary-foreground"
+                        ? "bg-primary hover:bg-primary/90 text-white"
                         : "bg-white border-2 border-[#E5E7EB] text-foreground hover:border-primary hover:text-primary"
                     }`}
                     variant={plan.highlighted ? "default" : "outline"}
@@ -888,7 +913,7 @@ function StatsAndTestimonials() {
           {STATS.map((stat) => (
             <div key={stat.label} className="text-center">
               <div
-                className="font-display font-bold text-foreground"
+                className="font-display font-bold text-primary"
                 style={{ fontSize: "clamp(32px, 4vw, 48px)" }}
               >
                 {stat.value}
@@ -925,7 +950,7 @@ function StatsAndTestimonials() {
               {/* Large quote mark */}
               <div
                 className="text-primary font-display font-black leading-none mb-4"
-                style={{ fontSize: "48px", opacity: 0.25 }}
+                style={{ fontSize: "48px", opacity: 0.2 }}
                 aria-hidden="true"
               >
                 "
@@ -1065,23 +1090,42 @@ function WaitlistSection() {
   return (
     <section
       id="waitlist"
-      className="py-section"
+      className="py-section relative overflow-hidden"
       style={{
-        background: "linear-gradient(to bottom, #ffffff, #f0f4ff)",
+        background:
+          "linear-gradient(135deg, #667eea 0%, #4f5fc0 60%, #3a3fa0 100%)",
       }}
     >
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+      {/* Subtle grid overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
+      {/* Top radial highlight */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(180,160,255,0.2) 0%, transparent 65%)",
+        }}
+      />
+
+      <div className="relative max-w-2xl mx-auto px-4 sm:px-6 text-center">
         <div className="fade-in">
-          <p className="text-xs font-semibold text-primary tracking-widest uppercase mb-4">
+          <p className="text-xs font-semibold text-white/70 tracking-widest uppercase mb-4">
             Get Early Access
           </p>
           <h2
-            className="font-display font-bold text-foreground tracking-tight mb-4"
+            className="font-display font-bold text-white tracking-tight mb-4"
             style={{ fontSize: "clamp(28px, 3.5vw, 36px)" }}
           >
             Ready to Save 70% on Translation Costs?
           </h2>
-          <p className="text-muted-foreground mb-10 text-base">
+          <p className="text-white/75 mb-10 text-base">
             Join 500+ Indian translators already using t09n. Start with 1,000
             free words. No credit card needed.
           </p>
@@ -1090,15 +1134,15 @@ function WaitlistSection() {
         {isSuccess ? (
           <div
             data-ocid="waitlist.success_state"
-            className="fade-in visible bg-white border border-emerald-200 rounded-2xl px-8 py-8 text-center shadow-sm"
+            className="fade-in visible bg-white/10 border border-white/25 rounded-2xl px-8 py-8 text-center backdrop-blur-sm"
           >
-            <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckIcon className="w-6 h-6 text-emerald-500" />
+            <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckIcon className="w-6 h-6 text-white" />
             </div>
-            <p className="font-display font-semibold text-lg text-foreground mb-1">
+            <p className="font-display font-semibold text-lg text-white mb-1">
               You're on the list!
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/70">
               We'll reach out soon with your access details.
             </p>
           </div>
@@ -1115,7 +1159,7 @@ function WaitlistSection() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 data-ocid="waitlist.input"
-                className="bg-white border-[#E5E7EB] text-foreground placeholder:text-muted-foreground h-12 rounded-xl w-full"
+                className="bg-white/15 border-white/30 text-white placeholder:text-white/50 h-12 rounded-xl w-full focus:bg-white/20 focus:border-white/50"
                 aria-invalid={!!validationError}
                 aria-describedby={
                   validationError ? "waitlist-validation-error" : undefined
@@ -1127,7 +1171,7 @@ function WaitlistSection() {
               type="submit"
               disabled={isPending}
               data-ocid="waitlist.submit_button"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold h-12 px-7 btn-primary flex-shrink-0 rounded-xl"
+              className="bg-white text-primary hover:bg-white/92 font-bold h-12 px-7 btn-primary-white flex-shrink-0 rounded-xl shadow-lg"
             >
               {isPending ? (
                 <span
@@ -1147,7 +1191,7 @@ function WaitlistSection() {
         {validationError && (
           <p
             id="waitlist-validation-error"
-            className="text-sm text-red-500 mt-3"
+            className="text-sm text-white/90 bg-white/15 rounded-lg px-4 py-2 mt-3 inline-block"
             data-ocid="waitlist.error_state"
           >
             {validationError}
@@ -1157,7 +1201,7 @@ function WaitlistSection() {
         {alreadySignedUp && (
           <div
             data-ocid="waitlist.error_state"
-            className="mt-4 text-sm text-primary bg-primary/6 border border-primary/20 rounded-xl px-5 py-3"
+            className="mt-4 text-sm text-white bg-white/15 border border-white/25 rounded-xl px-5 py-3"
           >
             You're already on the waitlist — we'll be in touch soon!
           </div>
@@ -1166,9 +1210,25 @@ function WaitlistSection() {
         {genericError && (
           <div
             data-ocid="waitlist.error_state"
-            className="mt-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-5 py-3"
+            className="mt-4 text-sm text-white bg-white/15 border border-white/25 rounded-xl px-5 py-3"
           >
             Something went wrong. Please try again.
+          </div>
+        )}
+
+        {/* Trust badges below form */}
+        {!isSuccess && (
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-6 text-xs text-white/60">
+            {[
+              "1,000 words free monthly",
+              "No credit card",
+              "Cancel anytime",
+            ].map((item) => (
+              <span key={item} className="flex items-center gap-1">
+                <CheckIcon className="w-3 h-3 text-white/70" />
+                {item}
+              </span>
+            ))}
           </div>
         )}
       </div>
@@ -1258,11 +1318,11 @@ function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <img
-              src="/assets/uploads/Version-01-2-1.png"
+              src="/assets/uploads/Version-04-1.png"
               alt="t09n.com"
-              className="h-11 w-auto brightness-0 invert"
+              className="h-11 w-auto"
             />
-            <span className="text-xs text-white/30 hidden sm:block">
+            <span className="text-xs text-white hidden sm:block">
               The operating system for professional translators.
             </span>
           </div>

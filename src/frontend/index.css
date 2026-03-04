@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -42,27 +40,27 @@
     --popover: 1 0 0;
     --popover-foreground: 0.13 0 0;
 
-    /* Primary: Indigo #667eea → OKLCH ~0.54 0.18 264 */
-    --primary: 0.54 0.18 264;
+    /* Primary: Purple-Blue #667eea → OKLCH ~0.58 0.18 270 */
+    --primary: 0.58 0.18 270;
     --primary-foreground: 1 0 0;
 
-    --secondary: 0.97 0.01 264;
-    --secondary-foreground: 0.54 0.18 264;
+    --secondary: 0.97 0.01 270;
+    --secondary-foreground: 0.58 0.18 270;
 
-    --muted: 0.97 0.005 264;
-    --muted-foreground: 0.50 0.01 264;
+    --muted: 0.97 0.005 270;
+    --muted-foreground: 0.48 0.01 0;
 
-    --accent: 0.96 0.01 264;
-    --accent-foreground: 0.54 0.18 264;
+    --accent: 0.96 0.01 270;
+    --accent-foreground: 0.58 0.18 270;
 
     --destructive: 0.577 0.245 27.325;
     --destructive-foreground: 0.985 0 0;
 
-    --border: 0.92 0.003 264;
-    --input: 0.92 0.003 264;
-    --ring: 0.54 0.18 264;
+    --border: 0.92 0.003 270;
+    --input: 0.92 0.003 270;
+    --ring: 0.58 0.18 270;
 
-    --chart-1: 0.54 0.18 264;
+    --chart-1: 0.58 0.18 270;
     --chart-2: 0.6 0.118 184.704;
     --chart-3: 0.398 0.07 227.392;
     --chart-4: 0.828 0.189 84.429;
@@ -70,47 +68,47 @@
 
     --sidebar: 0.985 0 0;
     --sidebar-foreground: 0.13 0 0;
-    --sidebar-primary: 0.54 0.18 264;
+    --sidebar-primary: 0.58 0.18 270;
     --sidebar-primary-foreground: 1 0 0;
-    --sidebar-accent: 0.96 0.01 264;
-    --sidebar-accent-foreground: 0.54 0.18 264;
-    --sidebar-border: 0.92 0.003 264;
-    --sidebar-ring: 0.54 0.18 264;
+    --sidebar-accent: 0.96 0.01 270;
+    --sidebar-accent-foreground: 0.58 0.18 270;
+    --sidebar-border: 0.92 0.003 270;
+    --sidebar-ring: 0.58 0.18 270;
   }
 
   .dark {
-    --background: 0.09 0.01 264;
+    --background: 0.09 0.01 270;
     --foreground: 0.97 0 0;
-    --card: 0.13 0.015 264;
+    --card: 0.13 0.015 270;
     --card-foreground: 0.97 0 0;
-    --popover: 0.16 0.015 264;
+    --popover: 0.16 0.015 270;
     --popover-foreground: 0.97 0 0;
-    --primary: 0.64 0.18 264;
-    --primary-foreground: 0.09 0 0;
-    --secondary: 0.2 0.02 264;
+    --primary: 0.65 0.18 270;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.2 0.02 270;
     --secondary-foreground: 0.97 0 0;
-    --muted: 0.2 0.01 264;
+    --muted: 0.2 0.01 270;
     --muted-foreground: 0.65 0 0;
-    --accent: 0.2 0.02 264;
+    --accent: 0.2 0.02 270;
     --accent-foreground: 0.97 0 0;
     --destructive: 0.704 0.191 22.216;
     --destructive-foreground: 0.97 0 0;
     --border: 1 0 0 / 10%;
     --input: 1 0 0 / 15%;
-    --ring: 0.54 0.18 264;
-    --chart-1: 0.64 0.18 264;
+    --ring: 0.58 0.18 270;
+    --chart-1: 0.65 0.18 270;
     --chart-2: 0.696 0.17 162.48;
     --chart-3: 0.769 0.188 70.08;
     --chart-4: 0.627 0.265 303.9;
     --chart-5: 0.645 0.246 16.439;
-    --sidebar: 0.13 0.015 264;
+    --sidebar: 0.13 0.015 270;
     --sidebar-foreground: 0.97 0 0;
-    --sidebar-primary: 0.64 0.18 264;
-    --sidebar-primary-foreground: 0.97 0 0;
-    --sidebar-accent: 0.2 0.02 264;
+    --sidebar-primary: 0.65 0.18 270;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.2 0.02 270;
     --sidebar-accent-foreground: 0.97 0 0;
     --sidebar-border: 1 0 0 / 10%;
-    --sidebar-ring: 0.54 0.18 264;
+    --sidebar-ring: 0.58 0.18 270;
   }
 
   * {
@@ -162,22 +160,24 @@
 .fade-in-delay-4 { transition-delay: 0.4s; }
 .fade-in-delay-5 { transition-delay: 0.5s; }
 
-/* ── Button Primary ────────────────────────────────────────────── */
+/* ── Button Primary (purple-blue bg, white text) ───────────────── */
 .btn-primary {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px oklch(0.54 0.18 264 / 0.35);
+  box-shadow: 0 8px 24px oklch(0.58 0.18 270 / 0.35);
 }
 
-/* Hero CTA glow */
-.hero-cta-glow {
-  box-shadow: 0 4px 20px oklch(0.54 0.18 264 / 0.25);
+/* ── Button Primary White (white bg, red text) — for red section CTAs */
+.btn-primary-white {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.hero-cta-glow:hover {
-  box-shadow: 0 10px 32px oklch(0.54 0.18 264 / 0.4);
+
+.btn-primary-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
 }
 
 /* ── Card Hover ────────────────────────────────────────────────── */
@@ -192,21 +192,21 @@
 
 /* ── Pricing Highlighted Card ──────────────────────────────────── */
 .pricing-highlight {
-  border: 2px solid oklch(0.54 0.18 264);
+  border: 2px solid oklch(0.58 0.18 270);
   box-shadow:
-    0 0 0 4px oklch(0.54 0.18 264 / 0.08),
-    0 20px 48px oklch(0.54 0.18 264 / 0.15);
+    0 0 0 4px oklch(0.58 0.18 270 / 0.08),
+    0 20px 48px oklch(0.58 0.18 270 / 0.15);
 }
 
 /* ── Selection ─────────────────────────────────────────────────── */
 ::selection {
-  background: oklch(0.54 0.18 264 / 0.15);
+  background: oklch(0.58 0.18 270 / 0.15);
   color: oklch(0.13 0 0);
 }
 
 /* ── Focus Visible ─────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid oklch(0.54 0.18 264);
+  outline: 2px solid oklch(0.58 0.18 270);
   outline-offset: 2px;
 }
 
