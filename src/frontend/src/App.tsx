@@ -288,6 +288,16 @@ function Hero() {
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center py-20 sm:py-28">
         {/* Hero wordmark */}
         <div className="flex flex-col items-center mb-4">
+          {/* Logo above t09n.com */}
+          <img
+            src="/assets/uploads/Version-01-3-1.png"
+            alt="t09n.com logo"
+            style={{
+              width: "clamp(80px, 10vw, 120px)",
+              height: "auto",
+              marginBottom: "16px",
+            }}
+          />
           <span
             style={{
               fontFamily: '"All Round Gothic", sans-serif',
