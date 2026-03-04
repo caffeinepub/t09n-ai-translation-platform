@@ -251,6 +251,25 @@ function Navbar() {
 
 /* ─── Hero ───────────────────────────────────────────────────────── */
 function Hero() {
+  const [isBlack, setIsBlack] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsBlack((prev) => !prev);
+    }, 2800);
+    return () => clearInterval(interval);
+  }, []);
+
+  const heroColor = isBlack ? "#111111" : "#ffffff";
+  const heroColorMuted = isBlack
+    ? "rgba(17,17,17,0.75)"
+    : "rgba(255,255,255,0.80)";
+  const heroColorStrong = isBlack ? "#111111" : "#ffffff";
+  const heroTextShadow = isBlack
+    ? "0 2px 20px rgba(255,255,255,0.1)"
+    : "0 2px 20px rgba(0,0,0,0.15)";
+  const colorTransition = "color 2.5s ease-in-out";
+
   return (
     <section
       className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden"
@@ -286,53 +305,104 @@ function Hero() {
       />
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center py-20 sm:py-28">
-        {/* Hero logo — white version on purple bg */}
-        <div className="flex flex-col items-center mb-10">
-          <img
-            src="/assets/uploads/Version-06-1.png"
-            alt="t09n.com"
-            className="h-28 sm:h-36 w-auto"
+        {/* Hero wordmark */}
+        <div className="flex flex-col items-center mb-4">
+          <span
+            className="font-display font-extrabold"
             style={{
-              imageRendering: "auto",
-              filter: "invert(1) brightness(10)",
+              fontSize: "clamp(28px, 4vw, 48px)",
+              letterSpacing: "-0.02em",
+              lineHeight: 1,
+              textShadow: heroTextShadow,
+              color: heroColor,
+              transition: `${colorTransition}, text-shadow 2.5s ease-in-out`,
             }}
-          />
-        </div>
-
-        {/* Eyebrow pill */}
-        <div className="inline-flex items-center gap-2 bg-white/15 border border-white/30 rounded-full px-4 py-1.5 mb-8">
-          <span className="w-1.5 h-1.5 rounded-full bg-white inline-block" />
-          <span className="text-xs font-semibold text-white tracking-wide uppercase">
-            Built for Indian Translators
+          >
+            t09n.com
           </span>
         </div>
 
         {/* Headline */}
         <h1
-          className="font-display font-extrabold text-white leading-tight tracking-tight mb-6"
+          className="font-display font-extrabold leading-tight tracking-tight mb-6"
           style={{
             fontSize: "clamp(36px, 5.5vw, 56px)",
             letterSpacing: "-0.02em",
             lineHeight: 1.1,
-            textShadow: "0 2px 20px rgba(0,0,0,0.15)",
+            textShadow: heroTextShadow,
+            color: heroColor,
+            transition: `${colorTransition}, text-shadow 2.5s ease-in-out`,
           }}
         >
           The Operating System
           <br className="hidden lg:block" />
-          <span className="text-white/90"> for Translators</span>
+          <span
+            style={{
+              color: isBlack ? "rgba(17,17,17,0.85)" : "rgba(255,255,255,0.90)",
+              transition: colorTransition,
+            }}
+          >
+            {" "}
+            for Translators
+          </span>
         </h1>
+
+        {/* Built for Indian Translators pill — below headline */}
+        <div
+          style={{
+            background: isBlack ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.15)",
+            border: isBlack
+              ? "1px solid rgba(0,0,0,0.20)"
+              : "1px solid rgba(255,255,255,0.30)",
+            transition:
+              "background 2.5s ease-in-out, border-color 2.5s ease-in-out",
+            borderRadius: "9999px",
+            padding: "6px 16px",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            marginBottom: "24px",
+          }}
+        >
+          <span
+            style={{
+              width: "6px",
+              height: "6px",
+              borderRadius: "50%",
+              background: heroColor,
+              transition: "background 2.5s ease-in-out",
+              display: "inline-block",
+              flexShrink: 0,
+            }}
+          />
+          <span
+            className="text-xs font-semibold tracking-wide uppercase"
+            style={{ color: heroColor, transition: colorTransition }}
+          >
+            Built for Indian Translators
+          </span>
+        </div>
 
         {/* Subheadline */}
         <p
-          className="text-white/80 mb-10 max-w-2xl mx-auto"
-          style={{ fontSize: "18px", lineHeight: 1.7 }}
+          className="mb-10 max-w-2xl mx-auto"
+          style={{
+            fontSize: "18px",
+            lineHeight: 1.7,
+            color: heroColorMuted,
+            transition: colorTransition,
+          }}
         >
           Professional translation platform at{" "}
-          <strong className="text-white font-semibold">70% lower cost</strong>{" "}
+          <strong
+            style={{ color: heroColorStrong, transition: colorTransition }}
+          >
+            70% lower cost
+          </strong>{" "}
           than SDL Trados. Dual-layer technology built for Indian translators.
         </p>
 
-        {/* Primary CTA + secondary ghost link */}
+        {/* Primary CTA + secondary ghost link — buttons stay as-is */}
         <div className="flex flex-col items-center gap-4 mb-12">
           <Button
             size="lg"
@@ -345,7 +415,11 @@ function Hero() {
           <button
             type="button"
             data-ocid="hero.pricing_link"
-            className="text-sm text-white/70 hover:text-white underline underline-offset-4 transition-colors bg-transparent border-0 p-0 cursor-pointer"
+            className="text-sm underline underline-offset-4 transition-colors bg-transparent border-0 p-0 cursor-pointer"
+            style={{
+              color: isBlack ? "rgba(17,17,17,0.65)" : "rgba(255,255,255,0.70)",
+              transition: colorTransition,
+            }}
             onClick={() => scrollToSection("#pricing")}
           >
             See Pricing →
@@ -353,15 +427,19 @@ function Hero() {
         </div>
 
         {/* Trust badges */}
-        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-white/75">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm">
           {[
             "1,000 words free",
             "10+ Indian languages",
             "Cancel anytime",
             "No credit card",
           ].map((badge) => (
-            <span key={badge} className="flex items-center gap-1.5">
-              <CheckIcon className="w-4 h-4 text-white/90 flex-shrink-0" />
+            <span
+              key={badge}
+              className="flex items-center gap-1.5"
+              style={{ color: heroColorMuted, transition: colorTransition }}
+            >
+              <CheckIcon className="w-4 h-4 flex-shrink-0" />
               {badge}
             </span>
           ))}
@@ -369,14 +447,21 @@ function Hero() {
       </div>
 
       {/* Scroll arrow */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
+        style={{
+          opacity: isBlack ? 0.5 : 0.4,
+          transition: "opacity 2.5s ease-in-out",
+        }}
+      >
         <svg
           width="20"
           height="20"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="white"
+          stroke={isBlack ? "#111111" : "white"}
           aria-hidden="true"
+          style={{ transition: "stroke 2.5s ease-in-out" }}
         >
           <path
             strokeLinecap="round"
