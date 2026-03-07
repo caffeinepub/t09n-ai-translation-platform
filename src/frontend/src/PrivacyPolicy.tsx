@@ -910,6 +910,19 @@ export default function PrivacyPolicy() {
             textAlign: "center",
           }}
         >
+          {/* Business identity */}
+          <p
+            style={{ marginBottom: "8px", fontSize: "13px", color: "#9ca3af" }}
+          >
+            Operated by{" "}
+            <strong style={{ color: "#6b7280" }}>LOCALIZATION LOUNGE</strong>
+            &ensp;&middot;&ensp; GSTIN:{" "}
+            <strong style={{ color: "#6b7280" }}>24BSWPM3389R1ZG</strong>
+            &ensp;&middot;&ensp; Support:{" "}
+            <a href="mailto:support@t09n.com" style={linkStyle}>
+              support@t09n.com
+            </a>
+          </p>
           <p style={{ marginBottom: "8px" }}>
             &copy; {year} t09n.com. All rights reserved.
           </p>

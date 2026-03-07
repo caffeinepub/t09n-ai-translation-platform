@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import AcceptableUsePolicy from "./AcceptableUsePolicy";
+import DownloadPage from "./DownloadPage";
 import PrivacyPolicy from "./PrivacyPolicy";
 import TermsOfService from "./TermsOfService";
 import { useActor } from "./hooks/useActor";
@@ -123,6 +124,7 @@ function Navbar() {
     },
     { href: "#pricing", label: "Pricing", ocid: "nav.pricing_link" },
     { href: "#faq", label: "FAQ", ocid: "nav.faq_link" },
+    { href: "#contact", label: "Contact", ocid: "nav.contact_link" },
   ];
 
   const handleNavClick = (href: string) => {
@@ -176,7 +178,7 @@ function Navbar() {
             size="sm"
             className="font-semibold btn-primary px-5 bg-[#1A6EF8] hover:bg-[#1560d4] text-white border border-[#1A6EF8]"
             data-ocid="nav.cta_button"
-            onClick={() => scrollToSection("#waitlist")}
+            onClick={() => window.open("https://app.t09n.com/signup", "_blank")}
           >
             Start Free
           </Button>
@@ -228,7 +230,7 @@ function Navbar() {
             data-ocid="nav.cta_button"
             onClick={() => {
               setMobileOpen(false);
-              scrollToSection("#waitlist");
+              window.open("https://app.t09n.com/signup", "_blank");
             }}
           >
             Start Free
@@ -395,7 +397,7 @@ function Hero() {
             size="lg"
             className="bg-[#1A6EF8] text-white hover:bg-[#1560d4] font-bold text-base px-9 h-14 btn-primary w-full sm:w-auto shadow-lg border-2 border-[#1A6EF8]"
             data-ocid="hero.cta_button"
-            onClick={() => scrollToSection("#waitlist")}
+            onClick={() => window.open("https://app.t09n.com/signup", "_blank")}
           >
             Start Free — No Credit Card
           </Button>
@@ -892,7 +894,9 @@ function Pricing() {
                     }`}
                     variant={plan.highlighted ? "default" : "outline"}
                     data-ocid={plan.ocid}
-                    onClick={() => scrollToSection("#waitlist")}
+                    onClick={() =>
+                      window.open("https://app.t09n.com/signup", "_blank")
+                    }
                   >
                     {plan.cta}
                   </Button>
@@ -1110,6 +1114,359 @@ function FAQ() {
               </AccordionItem>
             ))}
           </Accordion>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Contact Section ────────────────────────────────────────────── */
+function ContactSection() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    if (!form.name.trim()) {
+      setError("Please enter your name.");
+      return;
+    }
+    if (!form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (!form.message.trim()) {
+      setError("Please enter a message.");
+      return;
+    }
+    // Open email client with pre-filled details
+    const subject = encodeURIComponent(form.subject || "Inquiry from t09n.com");
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`,
+    );
+    window.location.href = `mailto:support@t09n.com?subject=${subject}&body=${body}`;
+    setSubmitted(true);
+  };
+
+  const contactDetails = [
+    {
+      icon: (
+        <svg
+          width="18"
+          height="18"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+          />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+      ),
+      label: "Address",
+      value:
+        "Gf-2, Balkishor Appt, Besides Green Home, Near Bahubali Chowkdi, Manjalpur - 390011, Vadodara, Gujarat, India.",
+      href: null,
+    },
+    {
+      icon: (
+        <svg
+          width="18"
+          height="18"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+          />
+        </svg>
+      ),
+      label: "Phone",
+      value: "+91-7878821314",
+      href: "tel:+917878821314",
+    },
+    {
+      icon: (
+        <svg
+          width="18"
+          height="18"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      ),
+      label: "Hours",
+      value: "Mon–Fri, 9am–6pm",
+      href: null,
+    },
+    {
+      icon: (
+        <svg
+          width="18"
+          height="18"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+          />
+        </svg>
+      ),
+      label: "Sales",
+      value: "sales@t09n.com",
+      href: "mailto:sales@t09n.com",
+    },
+    {
+      icon: (
+        <svg
+          width="18"
+          height="18"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+          />
+        </svg>
+      ),
+      label: "Join",
+      value: "join@t09n.com",
+      href: "mailto:join@t09n.com",
+    },
+  ];
+
+  return (
+    <section id="contact" className="py-section bg-white">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-14 fade-in">
+          <p className="text-xs font-semibold text-primary tracking-widest uppercase mb-3">
+            Contact
+          </p>
+          <h2
+            className="font-display font-bold text-foreground tracking-tight"
+            style={{ fontSize: "clamp(28px, 3.5vw, 36px)" }}
+          >
+            Let's start a <span className="text-primary">conversation</span>
+          </h2>
+          <p className="text-muted-foreground mt-3 text-base max-w-xl mx-auto">
+            Have questions about our platform? We're here to help Indian
+            translators get the most out of t09n.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 fade-in fade-in-delay-1">
+          {/* Left — contact details */}
+          <div className="md:col-span-2 flex flex-col gap-6">
+            <div className="bg-[#F7F9FC] rounded-2xl p-8 border border-[#E5E7EB] h-full">
+              <h3 className="font-display font-bold text-foreground text-lg mb-6">
+                Reach out to us
+              </h3>
+              <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
+                We respond to all queries within one business day. For urgent
+                support, email us directly.
+              </p>
+
+              <div className="flex flex-col gap-5">
+                {contactDetails.map((item) => (
+                  <div key={item.label} className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-0.5">
+                        {item.label}
+                      </p>
+                      {item.href ? (
+                        <a
+                          href={item.href}
+                          className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                        >
+                          {item.value}
+                        </a>
+                      ) : (
+                        <p className="text-sm font-medium text-foreground">
+                          {item.value}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right — form */}
+          <div className="md:col-span-3">
+            <div className="bg-white rounded-2xl border border-[#E5E7EB] p-8 shadow-sm">
+              {submitted ? (
+                <div
+                  data-ocid="contact.success_state"
+                  className="flex flex-col items-center justify-center py-12 text-center gap-4"
+                >
+                  <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center">
+                    <CheckIcon className="w-7 h-7 text-emerald-500" />
+                  </div>
+                  <p className="font-display font-semibold text-foreground text-lg">
+                    Message sent!
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Your email client has opened with your message. We'll reply
+                    within one business day.
+                  </p>
+                  <button
+                    type="button"
+                    className="text-sm text-primary hover:underline mt-2 bg-transparent border-0 p-0 cursor-pointer"
+                    onClick={() => setSubmitted(false)}
+                  >
+                    Send another message
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="flex flex-col gap-1.5">
+                      <label
+                        htmlFor="contact-name"
+                        className="text-xs font-semibold text-foreground uppercase tracking-wide"
+                      >
+                        Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="contact-name"
+                        type="text"
+                        placeholder="Your name"
+                        value={form.name}
+                        onChange={(e) =>
+                          setForm((f) => ({ ...f, name: e.target.value }))
+                        }
+                        data-ocid="contact.input"
+                        className="h-11 px-4 rounded-xl border border-[#E5E7EB] bg-white text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label
+                        htmlFor="contact-email"
+                        className="text-xs font-semibold text-foreground uppercase tracking-wide"
+                      >
+                        Email <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="contact-email"
+                        type="email"
+                        placeholder="you@example.com"
+                        value={form.email}
+                        onChange={(e) =>
+                          setForm((f) => ({ ...f, email: e.target.value }))
+                        }
+                        data-ocid="contact.input"
+                        className="h-11 px-4 rounded-xl border border-[#E5E7EB] bg-white text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label
+                      htmlFor="contact-subject"
+                      className="text-xs font-semibold text-foreground uppercase tracking-wide"
+                    >
+                      Subject
+                    </label>
+                    <input
+                      id="contact-subject"
+                      type="text"
+                      placeholder="How can we help?"
+                      value={form.subject}
+                      onChange={(e) =>
+                        setForm((f) => ({ ...f, subject: e.target.value }))
+                      }
+                      data-ocid="contact.input"
+                      className="h-11 px-4 rounded-xl border border-[#E5E7EB] bg-white text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label
+                      htmlFor="contact-message"
+                      className="text-xs font-semibold text-foreground uppercase tracking-wide"
+                    >
+                      Message <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      placeholder="Tell us more about your query..."
+                      value={form.message}
+                      onChange={(e) =>
+                        setForm((f) => ({ ...f, message: e.target.value }))
+                      }
+                      data-ocid="contact.textarea"
+                      rows={5}
+                      className="px-4 py-3 rounded-xl border border-[#E5E7EB] bg-white text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition resize-none"
+                      required
+                    />
+                  </div>
+
+                  {error && (
+                    <p
+                      data-ocid="contact.error_state"
+                      className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2"
+                    >
+                      {error}
+                    </p>
+                  )}
+
+                  <Button
+                    type="submit"
+                    data-ocid="contact.submit_button"
+                    className="bg-[#1A6EF8] hover:bg-[#1560d4] text-white font-bold h-12 px-8 btn-primary rounded-xl w-full sm:w-auto self-start"
+                  >
+                    Send Message
+                  </Button>
+                </form>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1335,7 +1692,7 @@ function Footer() {
       links: [
         { label: "Twitter", href: "https://twitter.com/t09napp" },
         { label: "LinkedIn", href: "https://linkedin.com/company/t09n" },
-        { label: "Email", href: "mailto:hello@t09n.com" },
+        { label: "Email", href: "mailto:join@t09n.com" },
       ],
     },
   ];
@@ -1380,6 +1737,31 @@ function Footer() {
           ))}
         </div>
 
+        {/* Business identity strip */}
+        <div className="py-4 border-b border-white/10 flex flex-col sm:flex-row items-center justify-center gap-x-6 gap-y-1 text-xs text-white/50">
+          <span>
+            Operated by{" "}
+            <span className="text-white/70 font-medium">
+              LOCALIZATION LOUNGE
+            </span>
+          </span>
+          <span className="hidden sm:inline text-white/20">|</span>
+          <span>
+            GSTIN:{" "}
+            <span className="text-white/70 font-medium">24BSWPM3389R1ZG</span>
+          </span>
+          <span className="hidden sm:inline text-white/20">|</span>
+          <span>
+            Support:{" "}
+            <a
+              href="mailto:support@t09n.com"
+              className="text-white/70 hover:text-white transition-colors"
+            >
+              support@t09n.com
+            </a>
+          </span>
+        </div>
+
         {/* Bottom row */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -1415,6 +1797,7 @@ function LandingPage() {
         <Pricing />
         <StatsAndTestimonials />
         <FAQ />
+        <ContactSection />
         <WaitlistSection />
       </main>
       <Footer />
@@ -1438,6 +1821,9 @@ export default function App() {
   }
   if (window.location.pathname.startsWith("/acceptable-use-policy")) {
     return <AcceptableUsePolicy />;
+  }
+  if (window.location.pathname.startsWith("/download")) {
+    return <DownloadPage />;
   }
   return <LandingPage />;
 }
