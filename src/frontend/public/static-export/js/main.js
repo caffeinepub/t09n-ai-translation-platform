@@ -119,9 +119,56 @@
         return;
       }
 
-      /* Static site — just show success */
+      /* Redirect to signup with email pre-filled */
+      window.open("https://app.t09n.com/signup?email=" + encodeURIComponent(email), "_blank");
       if (waitlistForm) waitlistForm.style.display = "none";
       if (waitlistSuccess) waitlistSuccess.style.display = "block";
+    });
+  }
+
+  /* ── Contact form ─────────────────────────────────────────────────────── */
+  var contactForm = document.getElementById("contact-form");
+  var contactSuccess = document.getElementById("contact-success");
+  var contactError = document.getElementById("contact-error");
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (contactError) contactError.style.display = "none";
+
+      var nameEl = document.getElementById("contact-name");
+      var emailEl = document.getElementById("contact-email");
+      var subjectEl = document.getElementById("contact-subject");
+      var messageEl = document.getElementById("contact-message");
+
+      var name = nameEl ? nameEl.value.trim() : "";
+      var email = emailEl ? emailEl.value.trim() : "";
+      var subject = subjectEl ? subjectEl.value.trim() : "";
+      var message = messageEl ? messageEl.value.trim() : "";
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!name) {
+        if (contactError) { contactError.textContent = "Please enter your name."; contactError.style.display = "block"; }
+        if (nameEl) nameEl.focus();
+        return;
+      }
+      if (!emailRegex.test(email)) {
+        if (contactError) { contactError.textContent = "Please enter a valid email address."; contactError.style.display = "block"; }
+        if (emailEl) emailEl.focus();
+        return;
+      }
+      if (!message) {
+        if (contactError) { contactError.textContent = "Please enter a message."; contactError.style.display = "block"; }
+        if (messageEl) messageEl.focus();
+        return;
+      }
+
+      var mailSubject = encodeURIComponent(subject || "Inquiry from t09n.com");
+      var mailBody = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\n" + message);
+      window.location.href = "mailto:support@t09n.com?subject=" + mailSubject + "&body=" + mailBody;
+
+      if (contactForm) contactForm.style.display = "none";
+      if (contactSuccess) contactSuccess.style.display = "flex";
     });
   }
 

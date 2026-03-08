@@ -59,6 +59,14 @@ const STATIC_FILES = [
     path: "/static-export/acceptable-use-policy.html",
     mime: "text/html",
   },
+  {
+    filename: "about.html",
+    folder: "",
+    description:
+      "About Us page — Our Story, platform features, approach, vision, company information",
+    path: "/static-export/about.html",
+    mime: "text/html",
+  },
 ];
 
 const BINARY_ASSETS = [
@@ -353,7 +361,7 @@ export default function DownloadPage() {
                 color: "#065F46",
               }}
             >
-              <strong>✓ All 7 files ready.</strong> Click "↓ Download" to save
+              <strong>✓ All 8 files ready.</strong> Click "↓ Download" to save
               each file, or "Copy content" to copy to clipboard.
             </div>
 
@@ -410,6 +418,7 @@ export default function DownloadPage() {
           >
             {`your-hosting-root/
 ├── index.html
+├── about.html
 ├── privacy-policy.html
 ├── terms-of-service.html
 ├── acceptable-use-policy.html

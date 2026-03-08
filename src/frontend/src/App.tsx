@@ -6,13 +6,12 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import AboutPage from "./AboutPage";
 import AcceptableUsePolicy from "./AcceptableUsePolicy";
 import DownloadPage from "./DownloadPage";
 import PrivacyPolicy from "./PrivacyPolicy";
 import TermsOfService from "./TermsOfService";
-import { useActor } from "./hooks/useActor";
 
 /* ─── useFadeInOnScroll ──────────────────────────────────────────── */
 function useFadeInOnScroll() {
@@ -74,31 +73,6 @@ function XIcon({ className }: { className?: string }) {
         strokeLinejoin="round"
         strokeWidth={2.5}
         d="M6 18L18 6M6 6l12 12"
-      />
-    </svg>
-  );
-}
-
-function SpinnerIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
       />
     </svg>
   );
@@ -801,10 +775,9 @@ const PLANS = [
       "500,000 words/month",
       "Team accounts",
       "Custom glossaries",
-      "API access",
       "Dedicated support",
     ],
-    cta: "Contact Us",
+    cta: "Buy Now",
     highlighted: false,
     ocid: "pricing.business_button",
   },
@@ -895,7 +868,12 @@ function Pricing() {
                     variant={plan.highlighted ? "default" : "outline"}
                     data-ocid={plan.ocid}
                     onClick={() =>
-                      window.open("https://app.t09n.com/signup", "_blank")
+                      window.open(
+                        plan.cta === "Try Free"
+                          ? "https://app.t09n.com/signup"
+                          : "https://app.t09n.com/pricing",
+                        "_blank",
+                      )
                     }
                   >
                     {plan.cta}
@@ -1475,23 +1453,9 @@ function ContactSection() {
 
 /* ─── Waitlist / CTA Section ─────────────────────────────────────── */
 function WaitlistSection() {
-  const { actor } = useActor();
   const [email, setEmail] = useState("");
   const [validationError, setValidationError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const { mutate, isPending, isSuccess, isError, error } = useMutation<
-    void,
-    Error,
-    string
-  >({
-    mutationFn: async (emailVal: string) => {
-      if (!actor) throw new Error("Not connected");
-      const already = await actor.isInWaitlist(emailVal);
-      if (already) throw new Error("already_signed_up");
-      await actor.signUp(emailVal);
-    },
-  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -1501,13 +1465,12 @@ function WaitlistSection() {
       inputRef.current?.focus();
       return;
     }
-    mutate(email);
+    // Redirect to signup with email pre-filled
+    window.open(
+      `https://app.t09n.com/signup?email=${encodeURIComponent(email)}`,
+      "_blank",
+    );
   };
-
-  const alreadySignedUp =
-    isError && (error as Error)?.message === "already_signed_up";
-  const genericError =
-    isError && (error as Error)?.message !== "already_signed_up";
 
   return (
     <section
@@ -1553,62 +1516,33 @@ function WaitlistSection() {
           </p>
         </div>
 
-        {isSuccess ? (
-          <div
-            data-ocid="waitlist.success_state"
-            className="fade-in visible bg-white/10 border border-white/25 rounded-2xl px-8 py-8 text-center backdrop-blur-sm"
-          >
-            <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckIcon className="w-6 h-6 text-white" />
-            </div>
-            <p className="font-display font-semibold text-lg text-white mb-1">
-              You're on the list!
-            </p>
-            <p className="text-sm text-white/70">
-              We'll reach out soon with your access details.
-            </p>
+        <form
+          onSubmit={handleSubmit}
+          className="fade-in fade-in-delay-1 flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+        >
+          <div className="flex-1">
+            <Input
+              ref={inputRef}
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              data-ocid="waitlist.input"
+              className="bg-white/15 border-white/30 text-white placeholder:text-white/50 h-12 rounded-xl w-full focus:bg-white/20 focus:border-white/50"
+              aria-invalid={!!validationError}
+              aria-describedby={
+                validationError ? "waitlist-validation-error" : undefined
+              }
+            />
           </div>
-        ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="fade-in fade-in-delay-1 flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+          <Button
+            type="submit"
+            data-ocid="waitlist.submit_button"
+            className="bg-white text-primary hover:bg-white/92 font-bold h-12 px-7 btn-primary-white flex-shrink-0 rounded-xl shadow-lg"
           >
-            <div className="flex-1">
-              <Input
-                ref={inputRef}
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                data-ocid="waitlist.input"
-                className="bg-white/15 border-white/30 text-white placeholder:text-white/50 h-12 rounded-xl w-full focus:bg-white/20 focus:border-white/50"
-                aria-invalid={!!validationError}
-                aria-describedby={
-                  validationError ? "waitlist-validation-error" : undefined
-                }
-                disabled={isPending}
-              />
-            </div>
-            <Button
-              type="submit"
-              disabled={isPending}
-              data-ocid="waitlist.submit_button"
-              className="bg-white text-primary hover:bg-white/92 font-bold h-12 px-7 btn-primary-white flex-shrink-0 rounded-xl shadow-lg"
-            >
-              {isPending ? (
-                <span
-                  className="flex items-center gap-2"
-                  data-ocid="waitlist.loading_state"
-                >
-                  <SpinnerIcon className="animate-spin w-4 h-4" />
-                  Joining…
-                </span>
-              ) : (
-                "Start Free"
-              )}
-            </Button>
-          </form>
-        )}
+            Start Free
+          </Button>
+        </form>
 
         {validationError && (
           <p
@@ -1620,39 +1554,17 @@ function WaitlistSection() {
           </p>
         )}
 
-        {alreadySignedUp && (
-          <div
-            data-ocid="waitlist.error_state"
-            className="mt-4 text-sm text-white bg-white/15 border border-white/25 rounded-xl px-5 py-3"
-          >
-            You're already on the waitlist — we'll be in touch soon!
-          </div>
-        )}
-
-        {genericError && (
-          <div
-            data-ocid="waitlist.error_state"
-            className="mt-4 text-sm text-white bg-white/15 border border-white/25 rounded-xl px-5 py-3"
-          >
-            Something went wrong. Please try again.
-          </div>
-        )}
-
         {/* Trust badges below form */}
-        {!isSuccess && (
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-6 text-xs text-white/60">
-            {[
-              "1,000 words free monthly",
-              "No credit card",
-              "Cancel anytime",
-            ].map((item) => (
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-6 text-xs text-white/60">
+          {["1,000 words free monthly", "No credit card", "Cancel anytime"].map(
+            (item) => (
               <span key={item} className="flex items-center gap-1">
                 <CheckIcon className="w-3 h-3 text-white/70" />
                 {item}
               </span>
-            ))}
-          </div>
-        )}
+            ),
+          )}
+        </div>
       </div>
     </section>
   );
@@ -1674,8 +1586,8 @@ function Footer() {
     {
       heading: "Company",
       links: [
-        { label: "About", href: "#" },
-        { label: "Contact", href: "#" },
+        { label: "About", href: "/about" },
+        { label: "Contact", href: "#contact" },
         { label: "Blog", href: "#" },
       ],
     },
@@ -1824,6 +1736,9 @@ export default function App() {
   }
   if (window.location.pathname.startsWith("/download")) {
     return <DownloadPage />;
+  }
+  if (window.location.pathname.startsWith("/about")) {
+    return <AboutPage />;
   }
   return <LandingPage />;
 }
